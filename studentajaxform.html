@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		.container{
+			width: 60%;
+			height:400px;
+			margin: auto;
+			box-shadow: 0px 0px 5px 5px #eee;
+			border:2px solid gray;
+			border-radius: 5px;
+			padding: 15px;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+	<form>
+	<input type="text" name="std_name" placeholder="Enter your Name" class="form-control" id="std_name">
+	<input type="email" name="std_email" placeholder="Enter your email" class="form-control" id="std_email">
+	<textarea name="std_address" placeholder="Enter your student address" class="form-control" id="std_address"></textarea>
+	<input type="date" name="std_dob" placeholder="Enter your dob" class="form-control" id="std_dob">
+	<input type="number" name="std_phno" placeholder="Enter your student phno" class="form-control" id="std_phno">
+	<input type="button" name="submit" value="Register" class="btn btn-info" >
+	</form>
+	</div>
+	<script type="text/javascript">
+		$(function () {
+			$('#btn').click(function(){
+				var std_name = $('#std_name').val();
+				var std_email = $('#std_email').val();
+				var std_dob = $('#std_dob').val();
+				var std_address = $('#std_address').val();
+				var std_phno = $('#std_phno').val();
+
+				$ajax({
+					url:"student.php",
+					type:'post',
+					data:{
+						std_name:std_name,
+						std_email:std_email,
+						std_dob:std_dob,
+						std_address:std_address,
+						std_phno:std_phno,
+					},
+					success:function(res){
+						console.log(res)
+					},
+					error:function(res){
+						console.log(res)
+					}
+				})
+			})
+		})
+	</script>
+</body>
+</html>

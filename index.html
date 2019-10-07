@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="Div1">
+	<table class="table" id="table">
+		<tr>
+			<th>Sl.No</th>
+			<th>Student Name</th>
+			<th>Student Email</th>
+			<th>Student Address</th>
+			<th>Student dob</th>
+			<th>Student phno</th>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		function dele(id){
+			$.ajax({
+				url:'delete.php',
+				type:'get',
+				data:{
+					id:id
+				},
+				success:function(res){
+					alert(res);
+					display();
+				},
+				error:function(res){
+
+				}
+		})
+		}
+		function studentView(id){
+			$.ajax({
+				url:'viewById.php',
+				type:'get',
+				data:{
+					id:id
+				},
+				success:function(res){
+					console.log(res)
+				},
+				error:function(res){
+
+				}
+		})
+		}
+		function display(){
+			$.ajax({
+				url:'view.php',
+				type:'get',
+				data:{
+
+				},
+				success:function(res){
+					console.log(res)
+					var obj = JSON.parse(res);
+					console.log(obj)
+					var table_content = ''
+					$('#table').find('tr:not(:first)' ).remove();
+						$.each(obj,function(index,value){
+							table_content+="<tr>";
+							table_content+="<td>"+value.id+"</td>";
+							table_content+="<td>"+value.std_name+"</td>";
+							table_content+="<td>"+value.std_email+"</td>";
+							table_content+="<td>"+value.std_address+"</td>";
+							table_content+="<td>"+value.std_dob+"</td>";
+							table_content+="<td>"+value.std_phno+"</td>";
+							table_content+="<td><a class='btn btn-primary' href='Edit.php?id="+value.id+"'>Edit</a><button class='btn btn-danger' onclick='dele("+value.id+")'>Delete</button><button class='btn btn-info' onclick='studentView("+value.id+")'>View</button></td>";
+							table_content+="</tr>";
+						});
+						$("#table").append(table_content);
+						$.each(obj,function(index,value){
+							table_content+="<div style='border: 2px solid gray; padding: 20px; box-shadow: 0px 0px 5px 5px #ff;margin:10px '><h2>Name:"+value.std_name+"</2><p>Address: "+value.std_address+"</p><p>DOB: "+value.std_dob+"</p><p>Phone Number: "+value.std_phno+"</p></div>"
+						})
+						$('Div1').append(table_content);
+				},
+				error:function(res){
+					console.log(res)
+				}
+			})
+		}
+		display()
+	</script>
+	</div>
+
+</body>
+</html>
